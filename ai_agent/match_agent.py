@@ -4,7 +4,12 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from agents import Agent, AsyncOpenAI, RunConfig, OpenAIChatCompletionsModel, Runner
 from sanity_client import fetch_tutors
-
+try:
+    from openai import RateLimitError, APIError
+except Exception:  # pragma: no cover
+    class RateLimitError(Exception): ...
+    class APIError(Exception): ...
+    
 load_dotenv()
 
 # Gemini Config
